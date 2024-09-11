@@ -42,3 +42,5 @@ cd nmap-scanner
     5. Service Version Detection (-sV): Attempts to determine service versions.
     6. OS Detection (-O): Attempts to determine the operating system of the target.
     7. Full Scan (-p-): Scans all 65,535 TCP ports.
+
+Feel free add your own favorite scanning methods!
