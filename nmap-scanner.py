@@ -1,5 +1,6 @@
 import os
 import subprocess
+import re
 
 def print_colored(text, color):
     colors = {
@@ -12,21 +13,43 @@ def print_colored(text, color):
 
 def print_ascii_art():
     art = """
-███╗   ██╗███╗   ███╗ █████╗ ██████╗ 
-████╗  ██║████╗ ████║██╔══██╗██╔══██╗
-██╔██╗ ██║██╔████╔██║███████║██║  ██║
-██║╚██╗██║██║╚██╔╝██║██╔══██║██║  ██║
-██║ ╚████║██║ ╚═╝ ██║██║  ██║██████╔╝
-╚═╝  ╚═══╝╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝ 
+⠀⠀⠀⠀⠀⣠⣴⣾⣿⣿⣿⣿⣿⣿⣶⣤⣄⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣄⠀⠀⠀⠀⠀
+⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣆⠉⠉⢉⣿⣿⣿⣷⣦⣄⡀⠀
+⠀⠚⢛⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄
+⠀⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⠿⣿⡇
+⢀⣿⡿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠁⠀⠀⠀⠀⠀⠀⠈⠃
+⠸⠁⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⣿⣿⣿⡿⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠹⣿⣿⡇⠈⠻⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠈⠻⡇⠀⠀⠈⠙⠿⣿⠀⠀⠀
 
 Automated Nmap Scanner
 """
     print(print_colored(art, 'red'))
 
+def is_valid_ip_or_range(ip):
+    # Pattern to match valid IP address or CIDR notation
+    ip_pattern = re.compile(
+        r'^(\d{1,3}\.){3}\d{1,3}(/(3[0-2]|[12][0-9]|[0-9]))?$'
+    )
+    # Validate the IP or CIDR notation
+    if ip_pattern.match(ip):
+        # Split IP and CIDR parts
+        parts = ip.split('/')
+        if len(parts) == 2:
+            ip_part, cidr_part = parts
+            # Validate CIDR part
+            if not (0 <= int(cidr_part) <= 32):
+                return False
+        return True
+    return False
+
 def process_nmap_output(output):
     """Process the Nmap output and print the entire IP report in blue, with breaks between IP addresses."""
     lines = output.splitlines()
-    ip_start = False  # Track if we're at the start of a new IP section
+    ip_start = False  # Track if are at the start of a new IP section
 
     for line in lines:
         if "Nmap scan report for" in line:
@@ -43,8 +66,13 @@ def process_nmap_output(output):
 
 def main():
     print_ascii_art()
-    print(print_colored("Please enter an IP address or IP range:", 'green'))
-    ip = input()
+    while True:
+        print(print_colored("Please enter a valid IP address or IP range:", 'green'))
+        ip = input()
+        if is_valid_ip_or_range(ip):
+            break
+        else:
+            print(print_colored("Invalid IP address or range. Please try again.", 'red'))
 
     print(print_colored("Choose a scan method (1-7):", 'green'))
     methods = [
