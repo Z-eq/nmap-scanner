@@ -1,4 +1,4 @@
-Automated Nmap Scanner
+## Automated Nmap Scanner ##
 
 
 This script automates the process of scanning IP addresses or ranges using Nmap with seven powerful scanning techniques. It features color-coded output for improved readability:
@@ -7,14 +7,14 @@ This script automates the process of scanning IP addresses or ranges using Nmap 
     Green: User prompts and descriptions
     Blue: IP addresses, ports, and service details
 
-Features
+### Features
 
     Select from seven scanning methods
     Enter IP addresses or ranges
     Color-coded output for easy reading
     Breaks between different IP reports for clarity
 
-Requirements
+### Requirements
 
     Python 3.x
     Nmap installed on the system
