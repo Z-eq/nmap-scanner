@@ -6,13 +6,6 @@ This script automates the process of scanning IP addresses or ranges using Nmap 
     Green: User prompts and descriptions
     Blue: IP addresses, ports, and service details
 
-### Features
-
-    Select from seven scanning methods
-    Enter IP addresses or ranges
-    Color-coded output for easy reading
-    Breaks between different IP reports for clarity
-
 ### Requirements
 
     Python 3.x
@@ -22,16 +15,18 @@ This script automates the process of scanning IP addresses or ranges using Nmap 
 
     Clone the Repository:
 
-    bash
+git clone https://github.com/Z-eq/nmap-scanner.git
 
-git clone https://github.com/yourusername/nmap-scanner.git
 cd nmap-scanner
 
-Run the Script:
+### Run the Script:
 
     python nmap_scanner.py
 
-    ### Follow the Prompts:
+    Depend of what type of scan you do, nmap may require root access to run!
+    
+
+### Follow the Prompts:
         Enter the IP address or range you want to scan. Here are some examples:
             Single IP Address: 192.168.1.1
             IP Range: 192.168.1.1-192.168.1.10
